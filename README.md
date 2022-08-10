@@ -54,15 +54,16 @@ goes off as planned.
 
 # Contributors
 * Prabal Mahajan
+* Kunal Ghosh
+
 
 # Acknowledgment
 * Kunal Ghosh, Director, VSD Corp. Pvt. Ltd.
 
 
 # Contact Information 
-* Prabal Mahajan (IMT2020514) <br />
-* International Institute of Information Technology, Bangalore <br />
-* Prabal.Mahajan@iiitb.ac.in
+* Prabal Mahajan (IMT2020514) . International Institute of Information Technology, Bangalore . Prabal.Mahajan@iiitb.ac.in
+* Kunal Ghosh, Director, VSD Corp. Pvt. Ltd. kunalghosh@gmail.com
 
 # References
 
