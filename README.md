@@ -52,11 +52,17 @@ goes off as planned.
 
 ![Test Bench](https://user-images.githubusercontent.com/100370090/183951742-3ce961ac-e2b4-4784-b02e-7e147c5eaaac.png)
 
+# Contributors
+* Prabal Mahajan
+
+# Acknowledgment
+* Kunal Ghosh, Director, VSD Corp. Pvt. Ltd.
+
 
 # Contact Information 
-Prabal Mahajan (IMT2020514) <br />
-International Institute of Information Technology, Bangalore <br />
-Prabal.Mahajan@iiitb.ac.in
+* Prabal Mahajan (IMT2020514) <br />
+* International Institute of Information Technology, Bangalore <br />
+* Prabal.Mahajan@iiitb.ac.in
 
 # References
 
