@@ -38,7 +38,9 @@ signal. This code is run and tested using the Icarus Verilog
 compiler and the plots w.r.t time are obtained using GTKWave
 
 
-#Instructions to run
+# Instructions to run
+## IcarusVerilog and GTKWave
+### For Ubuntu
 
 ```
 $   sudo apt-get update
@@ -46,7 +48,7 @@ $   sudo apt-get install iverilog gtkwave
 ```
 
 
-# Test Bench 
+# Functional Charateristics 
 
 An Under Unit Test (UUT) is created in the testbench file,
 and variables for input and output are given to the test module.
@@ -59,6 +61,72 @@ off after 1 second. Another alarm is then set for 04:55, and it
 goes off as planned.
 
 ![Graph 1](https://user-images.githubusercontent.com/100370090/187265025-ee01baf9-0665-4490-b308-d6e12d953cfd.png)
+
+
+
+# Synthesis of Verilog
+Synthesis is a process by which an abstract specification of desired circuit behavior, typically at register transfer level (RTL), is turned into a design implementation in terms of logic gates, typically by a computer program called a synthesis tool. The program we use is called Yosys.
+
+## About Yosys
+Yosys is an open-source Verilog synthesis framework. It presently offers a fundamental set of synthesis algorithms for numerous application domains and has extensive Verilog-2005 support. By combining the existing passes (algorithms) using synthesis scripts and adding other passes as necessary by extending the Yosys C++ code base, Yosys may be modified to carry out any synthesis job.
+
+To install Yosys, follow the instructions given in the refered GitHub repository: https://github.com/YosysHQ/yosys
+
+## Instructions for Synthesis 
+Create a Yosys script yosys_run.sh in the cloned /iiitb_clockfpga directory and type in the following code into it:
+
+```
+# read design
+
+read_liberty -lib lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog iiitb_clockfpga.v
+
+# generic synthesis
+synth -top iiitb_clockfpga
+
+# mapping to mycells.lib
+dfflibmap -liberty ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+clean
+flatten
+
+# write synthesized design
+write_verilog -noattr iiitb_clockfpga_synth.v
+
+stat
+show
+
+```
+
+Then run the above script by typing the following command into the terminal:
+
+```
+$  yosys -s yosys_run.sh
+```
+
+As the schematic is very detailed no image could be included to represent it accurately, therefore, the file output.dot is provided along with the code and can be viewed with the Dot Viewer.
+
+
+# Gate Level Simulation (GLS)
+
+Gate level Simulation(GLS) is done at the late level of Design cycle. This is run after the RTL code is synthesized into Netlist. Netlist is translation from RTL into Gates and connection wirings with full functional and timing behaviour.
+
+Run the following commands in the terminal to do a gate level simulation of the design:
+
+```
+$ iverilog -DFUNCTIONAL -DUNIT_DELAY=#1 ./verilog_model/primitives.v ./verilog_model/sky130_fd_sc_hd.v iiitb_clockfpga_synth.v iiitb_clockfpga_tb.v
+$ ./a.out
+$ gtkwave test.vcd
+
+```
+
+![Graph 2](https://user-images.githubusercontent.com/100370090/187267277-bfbcd180-8f50-413e-a874-0ad739152142.png)
+
+
+
+
+
 
 
 # Contributors
@@ -77,3 +145,4 @@ goes off as planned.
 # References
 
 https://www.fpga4student.com/2016/11/verilog-code-for-alarm-clock-on-fpga.html
+
