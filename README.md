@@ -38,13 +38,23 @@ signal. This code is run and tested using the Icarus Verilog
 compiler and the plots w.r.t time are obtained using GTKWave
 
 
-# Instructions to run
+# Instructions for Tool Installation
 ## IcarusVerilog and GTKWave
 ### For Ubuntu
 
 ```
 $   sudo apt-get update
 $   sudo apt-get install iverilog gtkwave
+
+```
+## Instructions to run
+```
+$   sudo apt install -y git
+$   git clone (https://github.com/PrabalMahajan11/iiitb_clockfpga)
+$   cd iiitb_clockfpga
+$   iverilog iiitb_clockfpga.v iiitb_clockfpga_tb.v
+$   ./a.out
+$   gtkwave test.vcd
 ```
 
 
