@@ -38,6 +38,14 @@ signal. This code is run and tested using the Icarus Verilog
 compiler and the plots w.r.t time are obtained using GTKWave
 
 
+#Instructions to run
+
+```
+$   sudo apt-get update
+$   sudo apt-get install iverilog gtkwave
+```
+
+
 # Test Bench 
 
 An Under Unit Test (UUT) is created in the testbench file,
@@ -50,7 +58,8 @@ sounds at the predetermined time of 10:20, as seen in figure
 off after 1 second. Another alarm is then set for 04:55, and it
 goes off as planned.
 
-![Test Bench](https://user-images.githubusercontent.com/100370090/183951742-3ce961ac-e2b4-4784-b02e-7e147c5eaaac.png)
+![Graph 1](https://user-images.githubusercontent.com/100370090/187265025-ee01baf9-0665-4490-b308-d6e12d953cfd.png)
+
 
 # Contributors
 * Prabal Mahajan
