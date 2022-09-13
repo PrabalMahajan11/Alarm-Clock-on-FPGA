@@ -134,6 +134,93 @@ $ gtkwave test.vcd
 ![Graph 2](https://user-images.githubusercontent.com/100370090/187267277-bfbcd180-8f50-413e-a874-0ad739152142.png)
 
 
+# Process of Layout begins from here.
+
+## Python Installation 
+```
+$   sudo apt install -y build-essential python3 python3-venv python3-pip
+
+```
+
+## Docker Installation
+~~~
+$   sudo apt-get update
+
+$   sudo apt-get install docker docker-compose
+
+$   sudo systemctl start docker
+
+$   sudo docker run hello-world
+
+~~~
+
+If docker is successfully installed, you will get a sucess message here
+![1](https://user-images.githubusercontent.com/100370090/189886080-5e0db723-dcbb-4bba-9463-89abdf9ff7dc.png)
+
+## OpenLane Installation
+
+OpenLane is an automated RTL to GDSII flow based on several components including OpenROAD, Yosys, Magic, Netgen, CVC, SPEF-Extractor, CU-GR, Klayout and a number of custom scripts for design exploration and optimization. The flow performs full ASIC implementation steps from RTL all the way down to GDSII.
+
+To run this design as per screenshots go to your design folder and perform the cloning process, else go to home directory and perform the commands nothing will change except the paths in the magic commandline.
+
+~~~
+$   git clone https://github.com/The-OpenROAD-Project/OpenLane.git
+
+$   cd OpenLane/
+
+$   make
+
+$   make test
+
+~~~
+
+After 43 steps, if it ended with saying Basic test passed then open lane installed successfully
+
+![2](https://user-images.githubusercontent.com/100370090/189886636-c772031a-d10c-41c7-8d67-f2bfdabf2e24.png)
+
+
+## Magic Installation
+
+We need to download few softwares first in order for magic to be installed and work properly.
+
+~~~
+$   sudo apt-get install m4 
+
+$   sudo apt-get install tcsh
+
+$   sudo apt-get install csh
+
+$   sudo apt-get install libx11-dev
+
+$   sudo apt-get install tcl-dev tk-dev
+
+$   sudo apt-get install libcairo2-dev
+
+$   sudo apt-get install mesa-common-dev libglu1-mesa-dev
+
+$   sudo apt-get install libncurses-dev
+
+~~~
+
+Installng Magic now
+
+```
+$   git clone https://github.com/RTimothyEdwards/magic
+
+$   cd magic
+
+$   ./configure
+
+$   make
+
+$   make install
+```
+
+
+
+
+
+
 
 
 
