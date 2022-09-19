@@ -218,9 +218,153 @@ $   make install
 
 
 
+## Creating a Custom Inverter Cell
+
+A Custom Inverter Cell is required to create an inverter that can be tweaked based on our requirements and locally used in our design files.
+Commands:
+```
+$   git clone https://github.com/nickson-jose/vsdstdcelldesign.git
+
+$   cd vsdstdcelldesign
+
+$   cp ./libs/sky130A.tech sky130A.tech
+
+$   magic -T sky130A.tech sky130_inv.mag &
+
+```
 
 
 
+Two windows pop up when we run the above magic command, The first window is the Magic Viewport and the second window is the TCL console.
+
+
+
+
+![19_1](https://user-images.githubusercontent.com/100370090/191107738-b2349691-2333-4b68-9fa7-346ecf9a49ca.png)
+
+The above layout can be seen in the magic viewport.The design can be verified here and different layers can be seen and examined by selecting the area of examination and typeing what in the tcl window.
+
+To extract Spice netlist, Type the following commands in tcl window.
+
+```
+%   extract all
+
+%   ext2spice cthresh 0 rthresh 0
+
+%   ext2spice
+```
+
+
+Note that the cthresh 0 rthresh 0 are used to extract parasitic capacitances from the cell.
+
+![19_2](https://user-images.githubusercontent.com/100370090/191107953-f482f61c-9566-4a3d-9a14-472f53a99196.png)
+
+After this step,
+
+The spice netlist has to be edited to add the libraries we are using. To edit the spice netlist navigate to the vsdstdcelldesign directory and look for sky130_inv.spice file and edit it as shown below.
+
+
+![19_3](https://user-images.githubusercontent.com/100370090/191108524-23f26cbb-6290-4c30-8361-ba9ad05c614b.png)
+
+
+The final spice netlist should look like the following:
+```
+* SPICE3 file created from sky130_inv.ext - technology: sky130A
+
+.option scale=0.01u
+.include ./libs/pshort.lib
+.include ./libs/nshort.lib
+
+
+M1001 Y A VGND VGND nshort_model.0 ad=1435 pd=152 as=1365 ps=148 w=35 l=23
+M1000 Y A VPWR VPWR pshort_model.0 ad=1443 pd=152 as=1517 ps=156 w=37 l=23
+VDD VPWR 0 3.3V
+VSS VGND 0 0V
+Va A VGND PULSE(0V 3.3V 0 0.1ns 0.1ns 2ns 4ns)
+C0 Y VPWR 0.08fF
+C1 A Y 0.02fF
+C2 A VPWR 0.08fF
+C3 Y VGND 0.18fF
+C4 VPWR VGND 0.74fF
+
+
+.tran 1n 20n
+.control
+run
+.endc
+.end
+
+```
+
+Save the above editted file and install the ngspice tool using the following command:
+
+```
+$   sudo apt-get install ngspice
+```
+
+Next open the terminal in the directory where ngspice is stored and type the following command, ngspice console will open:
+```
+$   ngspice sky130_inv.spice 
+```
+
+![19_5](https://user-images.githubusercontent.com/100370090/191108789-9f038c2e-309d-48f8-a344-41339b75da5b.png)
+
+Now you can plot the graphs for the designed inverter model. Type the following command in the ngspice console.
+
+```
+->  plot y vs time a
+```
+
+![19_6](https://user-images.githubusercontent.com/100370090/191109089-e9673530-e69f-41a9-8e7f-988f3e88ba54.png)
+
+
+Four timing parameters are used to characterize the inverter standard cell:
+
+* Rise time: Time taken for the output to rise from 20% of max value to 80% of max value
+> Rise time = (2.23843 - 2.17935) = 59.08ps
+
+* Fall time- Time taken for the output to fall from 80% of max value to 20% of max value
+> Fall time = (4.09291 - 4.05004) = 42.87ps
+ 
+* Cell rise delay = time(50% output rise) - time(50% input fall)
+> Cell rise delay = (2.20636 - 2.15) = 56.36ps
+  
+* Cell fall delay = time(50% output fall) - time(50% input rise)
+> Cell fall delay = (4.07479 - 4.05) = 24.79ps
+
+
+
+To get a grid and to ensure the ports are placed correctly we can use this command in the tcl console
+
+```
+%   grid 0.46um 0.34um 0.23um 0.17um
+```
+
+![19_7](https://user-images.githubusercontent.com/100370090/191110125-b108da4f-217b-43f8-b8b7-ed01e427b2b6.png)
+
+To save the file with a different name, use the folllowing command in tcl window
+```
+%   save sky130_vsdinv.mag
+```
+
+Now open the sky130_vsdinv.mag using the magic command in terminal
+
+```
+$   magic -T sky130A.tech sky130_vsdinv.mag
+```
+
+In the tcl window type the following command to generate sky130_vsdinv.lef
+```
+%   lef write
+```
+
+A new sky130_vsdinv.lef file be created in the current directory.
+
+
+# Layout
+### Preparatory Steps
+
+The layout for the design we have been working on can be created using OpenLANE. But before this we have to perform some preparatory steps to run our custom design in OpenLANE. Navigate to the openlane folder and run the following commands:
 
 
 
